@@ -59,9 +59,9 @@ The user assumes all risk for any damages whatsoever resulting from loss of use,
 		</developer>
         </developers>
     <scm>
-            <url>https://github.com/prusso-sse/noreastsds_proto</url>
-            <connection>scm:git:git@github.com:prusso-sse/noreastsds_proto.git</connection>
-            <developerConnection>scm:git:git@github.com:prusso-sse/noreastsds_proto.git</developerConnection>
+            <url>https://github.com/USGS-CIDA/noreast-sds</url>
+            <connection>scm:git:git@github.com:USGS-CIDA/noreast-sds.git</connection>
+            <developerConnection>scm:git:git@github.com:USGS-CIDA/noreast-sds.git</developerConnection>
     </scm>
     <distributionManagement>
             <repository>
