@@ -1,0 +1,57 @@
+/* *****************************************************************************
+ * Project:		noreastsds
+ * Source:		custom.css
+ * Author:		Philip Russo
+ **************************************************************************** */
+
+/* This css should be overwritten by the project using this template */
+
+body {
+	padding-bottom: 70px;
+}
+
+#main_page {	
+	background-color:	#f2f2ff !important;
+	
+	border-style:		solid;
+	border-color: 		darkgray;
+	border-width:		1px;
+	border-radius: 	10px;
+	
+	-webkit-box-shadow:	inset 0 1px 1px rgba(0,0,0,0.05);
+	box-shadow: 		inset 0 1px 1px rgba(0,0,0,0.05);
+	
+	background: url(../img/BackgroundMap_25op.png) no-repeat center center fixed; 
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	
+	min-height:		400px;
+	
+	/* 			Top / Right / Bottom / Left */
+	padding:		15px;
+}
+
+.noreast_logo {
+	margin-left:	auto;
+	margin-right:	auto;
+	
+	margin-top: 	140px;
+	margin-bottom:	5px;
+}
+
+.siteid_input_field {
+	max-width: 	400px;
+	margin-left:	auto;
+	margin-right:	auto;
+}
+
+.col-xs-0 {
+    	display:	none; 
+}
+
+.date_entry {
+	font-size: 	10px;
+	font-style: 	italic;
+}
