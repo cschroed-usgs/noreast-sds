@@ -3,7 +3,7 @@
 
   <groupId>gov.usgs.cida.noreast</groupId>
   <artifactId>noreast-sds-proto</artifactId>
-  <version>0.0.2-SNAPSHOT</version>
+  <version>0.0.3-SNAPSHOT</version>
   <packaging>war</packaging>
 
   <name>noreast-sds Prototype</name>
