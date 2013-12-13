@@ -10,6 +10,7 @@ import gov.usgs.noreast.noreastsds.utils.exception.SDSExceptionID;
 import gov.usgs.noreast.springinit.config.FactoryConfig;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -77,9 +78,11 @@ public class SOSDataService {
 	 * ========================================================================
 	 */
 	/* ====================================================================== */
+	private static long cacheTimeout = 604800000;		// 1000 * 60 * 60 * 24 * 7 (1 week)
 	
 	private static Map<String, List<Future<SOSResult>>> queryFutures;
 	private static Map<String, List<SOSResult>> cachedResults;
+	private static Map<String, Long> resultCacheTiming;
 	
 	private static final SOSDataService INSTANCE = new SOSDataService();
     
@@ -90,6 +93,7 @@ public class SOSDataService {
     private SOSDataService() {
     	queryFutures = new ConcurrentHashMap<String, List<Future<SOSResult>>>();
     	cachedResults = new ConcurrentHashMap<String, List<SOSResult>>();
+    	resultCacheTiming = new ConcurrentHashMap<String, Long>();
     }
     
     public static SOSDataService getInstance() {
@@ -214,10 +218,31 @@ public class SOSDataService {
      */
     public boolean cachedResultsExist(String siteid) {
     	if(SOSDataService.cachedResults.containsKey(siteid)) {
-    		return true;
+    		/**
+    		 * Lets do a hack cache timing check here.  If the date of this
+    		 * cached result is greater than cacheTimeout, we'll kill it
+    		 * and have a new one created.
+    		 */
+    		Long cacheTime = SOSDataService.resultCacheTiming.get(siteid);
+    		if(cacheTime != null) {
+    			long now = new Date().getTime();
+    			if((now - cacheTime.longValue()) >= SOSDataService.cacheTimeout) {
+    				SOSDataService.cachedResults.remove(siteid);
+    				SOSDataService.resultCacheTiming.remove(siteid);
+    				
+    				log.info("SOSDataService.cachedResultsExist() INFO - Cached results for site id [" + siteid + 
+    						 "] have expired.  Removing cache and rerunning query.");
+        			return false;
+    			} else {
+    				return true;
+    			}
+    		} else {
+    			SOSDataService.cachedResults.remove(siteid);
+    			return false;
+    		}
+    	} else {
+    		return false;
     	}
-    	
-    	return false;
     }
     
     /**
@@ -282,6 +307,17 @@ public class SOSDataService {
     	 */
     	SOSDataService.queryFutures.remove(siteid);
     	SOSDataService.cachedResults.put(siteid, results);
+    	
+    	/**
+    	 * Grab the cachetimeout in the properties (everytime in case they are changed)
+    	 */
+    	try {
+    		SOSDataService.cacheTimeout = Long.parseLong(environment.getProperty("service.sos.cache.timeout"));
+    	} catch (Exception e) {
+    		SOSDataService.cacheTimeout = 604800000;
+    		log.error("Environment property [service.sos.cache.timeout] not found.  Using 1 week as default cache.");
+    	}
+    	SOSDataService.resultCacheTiming.put(siteid, new Long(new Date().getTime()));
     	
     	return results;
     }
