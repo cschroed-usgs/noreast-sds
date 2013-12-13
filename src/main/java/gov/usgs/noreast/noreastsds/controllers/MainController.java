@@ -182,11 +182,12 @@ public class MainController {
 			log.error(msg);
 			
 			if(e.getExceptionid() == SDSExceptionID.INVALID_JOB_ID) {
-				msg = "There are no results for site id [" + siteid + "].  Please submit " +
-					  "a new query.";
+				msg = "There are no results for site id [" + siteid + "].  Rerunning query...";
 			}
 			
-			return new ModelAndView("redirect:/error/" + siteid + "/message/" + msg);
+			log.error(msg);
+			
+			return new ModelAndView("redirect:/siteid/" + siteid);
 		}
 		
 		if(results.size() < 1) {
