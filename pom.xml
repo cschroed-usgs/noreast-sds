@@ -96,24 +96,6 @@ The user assumes all risk for any damages whatsoever resulting from loss of use,
 					          </includes>        
 				         		<targetPath>WEB-INF/classes/conf/logging</targetPath>
 			         		</resource>
-			         		
-			         		<!-- Application Properties -->
-			         		<resource>
-				          	<directory>conf/application/</directory>
-					          <includes>
-					          	<include>**/*.properties</include>
-					          </includes>        
-				         		<targetPath>WEB-INF/classes/conf/application</targetPath>
-			         		</resource>
-			         		
-			         		<!-- Service Properties -->
-			         		<resource>
-				          	<directory>conf/application/services/</directory>
-					          <includes>
-					          	<include>**/*.properties</include>
-					          </includes>        
-				         		<targetPath>WEB-INF/classes/conf/services</targetPath>
-			         		</resource>
 			      	</webResources>
 				</configuration>
 			</plugin>
