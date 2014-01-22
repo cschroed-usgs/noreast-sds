@@ -27,7 +27,7 @@ import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
 @Configuration
 @ComponentScan(	basePackages="gov.usgs.noreast" )
 @EnableWebMvc
-@PropertySource(value = {"classpath:/conf/application/sds.properties", "classpath:/conf/services/sos.properties"})
+@PropertySource(value = {"file:/opt/tomcat/conf/noreast-sds.properties"})
 public class SpringConfig extends WebMvcConfigurerAdapter {
 
 	/**
